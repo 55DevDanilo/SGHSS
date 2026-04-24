@@ -16,15 +16,15 @@ public class DB {
 	public static Connection getConnection() {
 
 		try {
-			if (conn == null||conn.isClosed()) {
+			if (conn == null || conn.isClosed()) {
 				Properties props = loadProperties();
 				String url = props.getProperty("dburl");
-				conn = DriverManager.getConnection(url, props);
+				conn = DriverManager.getConnection(url, props);// DriverManager.getConnection(url, user, password);
 
 			}
 
 		} catch (SQLException e) {
-			// TODO: handle exception
+
 			throw new DbException(e.getMessage());
 		}
 		return conn;
@@ -36,7 +36,7 @@ public class DB {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				// TODO: handle exception
+
 				throw new DbException(e.getMessage());
 
 			}
@@ -49,7 +49,7 @@ public class DB {
 				st.close();
 
 			} catch (SQLException e) {
-			
+
 				throw new DbException(e.getMessage());
 			}
 
@@ -61,7 +61,7 @@ public class DB {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				// TODO: handle exception
+
 				throw new DbException(e.getMessage());
 			}
 
