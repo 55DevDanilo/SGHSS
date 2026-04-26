@@ -58,11 +58,54 @@ public class PatientDaoJDBC implements PatientDao {
 
 	@Override
 	public void update(Patient p) {
+		PreparedStatement pr = null;
+		try {
+
+			pr = conn
+					.prepareStatement("UPDATE from Patient" + " Set name =?, email = ?, birthDate =? " + "where id =?");
+			pr.setString(1, p.getName());
+			pr.setString(2, p.getEmail());
+			pr.setDate(3, Date.valueOf(p.getBirthDate()));
+			pr.setInt(4, p.getId());
+			pr.executeUpdate();
+			int rowsAffects = pr.executeUpdate();
+			if (rowsAffects > 0) {
+
+				System.out.println("Rows Affected : " + rowsAffects);
+
+			} else {
+
+				throw new DbException("Unexpected error! No rows affected!");
+
+			}
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+
+			DB.closeStatement(pr);
+
+		}
 
 	}
 
 	@Override
 	public void deleteById(Integer id) {
+		PreparedStatement pr = null;
+
+		try {
+
+			pr = conn.prepareStatement("DELETE from  Patient" + "Where id = ?");
+			pr.setInt(1, id);
+			pr.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+
+			DB.closeStatement(pr);
+
+		}
 
 	}
 
