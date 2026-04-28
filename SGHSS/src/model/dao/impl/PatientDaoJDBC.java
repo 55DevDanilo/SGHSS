@@ -142,6 +142,35 @@ public class PatientDaoJDBC implements PatientDao {
 		}
 
 	}
+	
+	
+	public Patient findByEmail(String email ) {
+		PreparedStatement pr = null;
+		ResultSet rs = null;
+
+		try {
+
+			pr = conn.prepareStatement("Select * from  patient" + " Where email  = ?");
+			pr.setString(1,email);
+			rs = pr.executeQuery();
+
+			if (rs.next()) {
+
+				return instantPatient(rs);
+
+			}
+			return null;
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+
+			DB.closeResultSet(rs);
+			DB.closeStatement(pr);
+
+		}
+
+	}
 
 	@Override
 	public List<Patient> findAll() {

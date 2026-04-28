@@ -13,6 +13,8 @@ public interface PatientDao extends Dao<Patient> {
 	void deleteById(Integer id);
 
 	Patient findById(Integer id);
+	
+	Patient findByEmail(String email);
 
 	List<Patient> findAll();
 }

@@ -2,7 +2,9 @@ package model.dao.service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
+import model.dao.impl.PatientDaoJDBC;
 import model.entities.Patient;
 
 public class PatientService {
@@ -18,27 +20,50 @@ public class PatientService {
 //	validateTelefone(...)
 //	validateBirthDate(...)
 
-	private Set<Patient> patient = new HashSet<>();
+	private PatientDaoJDBC patientDAOJDBC;
+ 
 
 	public PatientService() {
 
 	}
 
+	public PatientService(PatientDaoJDBC patientDAOJDBC) {
+		this.patientDAOJDBC = patientDAOJDBC;
+	}
+
 	public void createPatient(Patient p) {
-		try {
-			if (p == null) {
-				throw new IllegalArgumentException("Paciente não pode ser nulo");
 
-			}
+		if (p.getName() == null || p.getName().isBlank() || p.getName().length() < 3) {
+			throw new IllegalArgumentException("Preenchimento incorreto do nome do paciente");
 
-			if (patient.contains(p) {
-				throw new IllegalArgumentException("Pacient já inserido");
-
-			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
 		}
+
+		if (p.getEmail() == null || p.getEmail().isBlank()) {
+			throw new IllegalArgumentException("E-mail não pode ser vazio");
+
+		}
+
+		if (validaEmail(p.getEmail()) != true) {
+			throw new IllegalArgumentException("Email inválido");
+
+		}
+		
+		
+
+		if (p.getTelefone() == null || p.getTelefone().isBlank()) {
+			throw new IllegalArgumentException("Telefone não pode ser vazio");
+		}
+
+		if (p.getTelefone().length() < 10) {
+			throw new IllegalArgumentException("Telefone inválido");
+		}
+
+	}
+
+	private static boolean validaEmail(String email) {
+		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+		String emailVerificar = email;
+		return Pattern.compile(emailRegex).matcher(emailVerificar).matches();
 	}
 
 }
