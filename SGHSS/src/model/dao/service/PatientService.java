@@ -1,9 +1,8 @@
 package model.dao.service;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Pattern;
 
+import model.dao.PatientDao;
 import model.dao.impl.PatientDaoJDBC;
 import model.entities.Patient;
 
@@ -20,15 +19,12 @@ public class PatientService {
 //	validateTelefone(...)
 //	validateBirthDate(...)
 
-	private PatientDaoJDBC patientDAOJDBC;
- 
+	// private PatientDaoJDBC patientDAOJDBC;
+	private PatientDao patientDao;
 
-	public PatientService() {
-
-	}
-
-	public PatientService(PatientDaoJDBC patientDAOJDBC) {
-		this.patientDAOJDBC = patientDAOJDBC;
+	public PatientService(PatientDao patientDao) {
+		// this.patientDAOJDBC = patientDAOJDBC;
+		this.patientDao = patientDao;
 	}
 
 	public void createPatient(Patient p) {
@@ -47,8 +43,10 @@ public class PatientService {
 			throw new IllegalArgumentException("Email inválido");
 
 		}
-		
-		
+
+		if (patientDao.findByEmail(p.getEmail()) != null) {
+			throw new IllegalArgumentException("Email Já cadastrado");
+		}
 
 		if (p.getTelefone() == null || p.getTelefone().isBlank()) {
 			throw new IllegalArgumentException("Telefone não pode ser vazio");
@@ -58,6 +56,9 @@ public class PatientService {
 			throw new IllegalArgumentException("Telefone inválido");
 		}
 
+		// Validação da data
+
+		patientDao.insert(p);
 	}
 
 	private static boolean validaEmail(String email) {
