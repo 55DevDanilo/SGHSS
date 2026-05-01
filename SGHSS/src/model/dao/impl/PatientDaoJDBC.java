@@ -54,6 +54,7 @@ public class PatientDaoJDBC implements PatientDao {
 			throw new DbException(e.getMessage());
 		} finally {
 
+		
 			DB.closeStatement(pr);
 
 		}

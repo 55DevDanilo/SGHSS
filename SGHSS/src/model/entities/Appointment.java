@@ -1,22 +1,22 @@
 package model.entities;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Appointment {
-	
+
 	private Integer id;
-	private LocalDateTime dateTime;
+	private Timestamp timeDate;
 	private String description;
 	private Patient patient;
-	
+
 	public Appointment() {
-		
+
 	}
 
-	public Appointment(Integer id, LocalDateTime dateTime, String description, Patient patient) {
+	public Appointment(Integer id, Timestamp timeDate, String description, Patient patient) {
 		this.id = id;
-		this.dateTime = dateTime;
+		this.timeDate = timeDate;
 		this.description = description;
 		this.patient = patient;
 	}
@@ -29,12 +29,12 @@ public class Appointment {
 		this.id = id;
 	}
 
-	public LocalDateTime getDateTime() {
-		return dateTime;
+	public Timestamp getDateTime() {
+		return timeDate;
 	}
 
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
+	public void setDateTime(Timestamp timeDate) {
+		this.timeDate = timeDate;
 	}
 
 	public String getDescription() {
@@ -49,8 +49,8 @@ public class Appointment {
 		return patient;
 	}
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+public void setPatient(Patient patient) {
+this.patient = patient;
 	}
 
 	@Override
@@ -72,14 +72,8 @@ public class Appointment {
 
 	@Override
 	public String toString() {
-		return "Appointment [id=" + id + ", dateTime=" + dateTime + ", description=" + description + ", patient="
+		return "Appointment [id=" + id + ", timeDate=" + timeDate + ", description=" + description + ", patient="
 				+ patient + "]";
 	}
-	
-	
-	
-	
-		
-
 
 }
