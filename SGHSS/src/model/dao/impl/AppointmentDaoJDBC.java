@@ -173,7 +173,7 @@ public class AppointmentDaoJDBC implements AppointmentDao {
 		ap.setId(rs.getInt("id"));
 
 		Patient p = new Patient();
-		p.setId(rs.getInt("patient"));
+		// p.setId(rs.getInt("patient"));
 		p.setName(rs.getString("name"));
 		p.setEmail(rs.getString("email"));
 		p.setTelefone(rs.getString("telefone"));

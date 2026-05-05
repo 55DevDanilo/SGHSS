@@ -50,9 +50,7 @@ public class Patient {
 	}
 
 	public void setEmail(String email) {
-		if (email == null || !email.contains("@")) {
-			throw new IllegalArgumentException("Invalid email");
-		}
+		
 		this.email = email;
 	}
 
