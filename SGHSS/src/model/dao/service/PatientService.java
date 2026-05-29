@@ -96,6 +96,27 @@ public class PatientService {
 		patientDao.update(p);
 	}
 
+	public void findPatientById(Patient p) {
+
+		if (p.getId() == null) {
+			throw new IllegalArgumentException("Id  não pode ser vazio");
+
+		}
+
+		if (patientDao.findById(p.getId()) == null) {
+			throw new IllegalArgumentException("Id não encontrado");
+
+		}
+
+		patientDao.findById(p.getId());
+	}
+
+	public void findAll() {
+
+		patientDao.findAll();
+
+	}
+
 	/////////////////// Métodos Estáticos
 
 	private static boolean validaEmail(String email) {
