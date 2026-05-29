@@ -54,7 +54,6 @@ public class PatientDaoJDBC implements PatientDao {
 			throw new DbException(e.getMessage());
 		} finally {
 
-		
 			DB.closeStatement(pr);
 
 		}
@@ -143,16 +142,15 @@ public class PatientDaoJDBC implements PatientDao {
 		}
 
 	}
-	
-	
-	public Patient findByEmail(String email ) {
+
+	public Patient findByEmail(String email) {
 		PreparedStatement pr = null;
 		ResultSet rs = null;
 
 		try {
 
 			pr = conn.prepareStatement("Select * from  patient" + " Where email  = ?");
-			pr.setString(1,email);
+			pr.setString(1, email);
 			rs = pr.executeQuery();
 
 			if (rs.next()) {

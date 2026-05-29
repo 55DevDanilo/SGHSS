@@ -1,7 +1,6 @@
 package model.dao.service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 import model.dao.PatientDao;
@@ -22,6 +21,10 @@ public class PatientService {
 
 	// private PatientDaoJDBC patientDAOJDBC;
 	private PatientDao patientDao;
+
+	public PatientService() {
+
+	}
 
 	public PatientService(PatientDao patientDao) {
 		// this.patientDAOJDBC = patientDAOJDBC;
@@ -63,6 +66,38 @@ public class PatientService {
 		patientDao.insert(p);
 	}
 
+	public void deletePatient(Patient p) {
+
+		if (p.getId() == null) {
+			throw new IllegalArgumentException("Id  não pode ser vazio");
+
+		}
+
+		if (patientDao.findById(p.getId()) == null) {
+			throw new IllegalArgumentException("Id não encontrado");
+
+		}
+
+		patientDao.deleteById(p.getId());
+	}
+
+	public void updatePatient(Patient p) {
+
+		if (p.getId() == null) {
+			throw new IllegalArgumentException("Id  não pode ser vazio");
+
+		}
+
+		if (patientDao.findById(p.getId()) == null) {
+			throw new IllegalArgumentException("Id não encontrado");
+
+		}
+
+		patientDao.update(p);
+	}
+
+	/////////////////// Métodos Estáticos
+
 	private static boolean validaEmail(String email) {
 		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 		String emailVerificar = email;
@@ -91,27 +126,23 @@ public class PatientService {
 		return true;
 	}
 
-	
-
-	
 	private static boolean validaDataNascimento(LocalDate birthDate) {
 
-	    if (birthDate == null) {
-	        return false;
-	    }
+		if (birthDate == null) {
+			return false;
+		}
 
-	    LocalDate hoje = LocalDate.now();
+		LocalDate hoje = LocalDate.now();
 
-	    if (birthDate.isAfter(hoje)) {
-	        return false; // Não pode ser no futuro
-	    }
+		if (birthDate.isAfter(hoje)) {
+			return false; // Não pode ser no futuro
+		}
 
-	    if (birthDate.isBefore(hoje.minusYears(120))) {
-	        return false; // 
-	    }
+		if (birthDate.isBefore(hoje.minusYears(120))) {
+			return false; //
+		}
 
-	    return true;
+		return true;
 	}
 
-	
 }
