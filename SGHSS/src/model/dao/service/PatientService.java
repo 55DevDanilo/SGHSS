@@ -1,6 +1,7 @@
 package model.dao.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import model.dao.PatientDao;
@@ -96,24 +97,20 @@ public class PatientService {
 		patientDao.update(p);
 	}
 
-	public void findPatientById(Patient p) {
+	public Patient findPatientById(Patient p) {
 
-		if (p.getId() == null) {
-			throw new IllegalArgumentException("Id  não pode ser vazio");
-
-		}
-
-		if (patientDao.findById(p.getId()) == null) {
+		if (p.getId() == null || patientDao.findById(p.getId()) == null) {
 			throw new IllegalArgumentException("Id não encontrado");
 
 		}
 
-		patientDao.findById(p.getId());
+
+		return patientDao.findById(p.getId());
 	}
 
-	public void findAll() {
+	public List<Patient> findAll() {
 
-		patientDao.findAll();
+		return patientDao.findAll();
 
 	}
 
