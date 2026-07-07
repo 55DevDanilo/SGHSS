@@ -1,6 +1,7 @@
 package model.dao.service;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -14,15 +15,16 @@ public class AppointmentService {
 //	- deleteAppointment(...)
 //	- findAppointmentById(...)
 //	- findAllAppointments(...)
-
+//****************Corrigir validações******************* Verificar conversa no ChatGPT
 	private AppointmentDao appointmentDao;
 	private PatientDao patientDao;
 
 	public AppointmentService() {
 	}
 
-	public AppointmentService(AppointmentDao appointmentDao) {
+	public AppointmentService(AppointmentDao appointmentDao, PatientDao patientDao) {
 		this.appointmentDao = appointmentDao;
+		this.patientDao = patientDao;
 	}
 
 	public void createAppointment(Appointment a) {
@@ -37,25 +39,31 @@ public class AppointmentService {
 
 		}
 
-		if (a.getId() == null || patientDao.findById(a.getPatient().getId()) == null|| a.getPatient() == null
-				|| a.getDescription().isEmpty()) {
+		if (a.getPatient() == null || a.getPatient().getId() == null) {
 			throw new IllegalArgumentException("Erro ao criar agendamento");
 
 		}
 
-		if () {
-			throw new IllegalArgumentException("Erro ao criara agendamento");
+		if (patientDao.findById(a.getPatient().getId()) == null)
 
+		{
+			throw new IllegalArgumentException("Paciente não encontrado");
+
+		}
+
+		if (a.getDescription() == null || a.getDescription().isEmpty()) {
+			throw new IllegalArgumentException("Descrição não pode ser vazia");
 		}
 
 		appointmentDao.insert(a);
 	}
 
 	private static boolean validaAgendamento(Timestamp timestamp) {
-
+		Instant now = Instant.now();
 		LocalDate hoje = LocalDate.now();
 		LocalDateTime hoj = hoje.atStartOfDay();
 		Timestamp ho = Timestamp.valueOf(hoj);
+		Timestamp tmstp = Timestamp.from(now);
 
 		if (timestamp == null) {
 			return false;
