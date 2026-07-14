@@ -10,7 +10,7 @@ import model.dao.PatientDao;
 import model.entities.Appointment;
 
 public class AppointmentService {
-//	- createAppointment(...)
+//	- createAppointment(...) ok
 //	- updateAppointment(...)
 //	- deleteAppointment(...)
 //	- findAppointmentById(...)
@@ -56,6 +56,32 @@ public class AppointmentService {
 		}
 
 		appointmentDao.insert(a);
+
+	}
+
+	public void updateAppointment(Appointment a) {
+
+		if (a.getId() == null) {
+
+			throw new IllegalArgumentException("Id não pode ser nulo");
+
+		}
+
+		if (patientDao.findById(a.getPatient().getId()) == null) {
+
+			throw new IllegalArgumentException("Id do paciente não encontrado");
+
+		}
+
+		if (a.getDescription() == null || a.getDescription().isEmpty()) {
+			throw new IllegalArgumentException("Descrição não pode ser vazia");
+		}
+
+		if (validaAgendamento(a.getDateTime()) != true) {
+			throw new IllegalArgumentException("Data inválida");
+
+		}
+		appointmentDao.update(a);
 	}
 
 	private static boolean validaAgendamento(Timestamp timestamp) {
@@ -70,14 +96,9 @@ public class AppointmentService {
 
 		}
 
-		if (timestamp.before(ho)) {
+		if (tmstp.getTime() > timestamp.getTime()) {
 			return false;
-
 		}
-
-//		if (timestamp.isAfter(hoje.plusYears(5))) {
-//			return false;
-//		}
 
 		return true;
 	}
