@@ -8,10 +8,11 @@ import java.time.LocalDateTime;
 import model.dao.AppointmentDao;
 import model.dao.PatientDao;
 import model.entities.Appointment;
+import model.entities.Patient;
 
 public class AppointmentService {
 //	- createAppointment(...) ok
-//	- updateAppointment(...)
+//	- updateAppointment(...) ok
 //	- deleteAppointment(...)
 //	- findAppointmentById(...)
 //	- findAllAppointments(...)
@@ -82,6 +83,23 @@ public class AppointmentService {
 
 		}
 		appointmentDao.update(a);
+	}
+
+	public void deleteAppointment(Appointment a) {
+
+		if (a.getId() == null) {
+
+			throw new IllegalArgumentException("Id não pode ser nulo");
+
+		}
+
+		if (patientDao.findById(a.getPatient().getId()) == null) {
+
+			throw new IllegalArgumentException("Id do paciente não encontrado");
+
+		}
+		
+		appointmentDao.deleteById(a.getId());
 	}
 
 	private static boolean validaAgendamento(Timestamp timestamp) {
