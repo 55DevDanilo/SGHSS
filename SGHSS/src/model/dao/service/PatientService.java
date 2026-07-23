@@ -23,10 +23,7 @@ public class PatientService {
 	// private PatientDaoJDBC patientDAOJDBC;
 	private PatientDao patientDao;
 
-	public PatientService() {
-
-	}
-
+	
 	public PatientService(PatientDao patientDao) {
 		// this.patientDAOJDBC = patientDAOJDBC;
 		this.patientDao = patientDao;

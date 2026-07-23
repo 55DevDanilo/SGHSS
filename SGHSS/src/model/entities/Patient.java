@@ -13,6 +13,19 @@ public class Patient {
 	public Patient() {
 	}
 
+	/**
+	 * @param name
+	 * @param email
+	 * @param telefone
+	 * @param birthDate
+	 */
+	public Patient(String name, String email, String telefone, LocalDate birthDate) {
+		this.name = name;
+		this.email = email;
+		this.telefone = telefone;
+		this.birthDate = birthDate;
+	}
+
 	public String getTelefone() {
 		return telefone;
 	}
@@ -21,6 +34,7 @@ public class Patient {
 		this.telefone = telefone;
 	}
 
+	
 	public Patient(Integer id, String name, String email, String telefone, LocalDate birthDate) {
 		this.id = id;
 		this.name = name;

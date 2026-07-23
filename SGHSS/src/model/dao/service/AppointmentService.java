@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import model.dao.AppointmentDao;
 import model.dao.PatientDao;
@@ -13,8 +14,8 @@ import model.entities.Patient;
 public class AppointmentService {
 //	- createAppointment(...) ok
 //	- updateAppointment(...) ok
-//	- deleteAppointment(...)
-//	- findAppointmentById(...)
+//	- deleteAppointment(...)ok
+//	- findAppointmentById(...)ok
 //	- findAllAppointments(...)
 //****************Corrigir validações******************* Verificar conversa no ChatGPT
 	private AppointmentDao appointmentDao;
@@ -82,6 +83,13 @@ public class AppointmentService {
 			throw new IllegalArgumentException("Data inválida");
 
 		}
+		
+		if (appointmentDao.findById(a.getId()) == null) {
+
+			throw new IllegalArgumentException("Agendamento não existente");
+
+		}
+
 		appointmentDao.update(a);
 	}
 
@@ -98,8 +106,27 @@ public class AppointmentService {
 			throw new IllegalArgumentException("Id do paciente não encontrado");
 
 		}
-		
+
+		if (appointmentDao.findById(a.getId()) == null) {
+
+			throw new IllegalArgumentException("Agendamento não existente");
+
+		}
 		appointmentDao.deleteById(a.getId());
+	}
+
+	public Appointment findAppointmentById(Appointment a) {
+
+		if (a.getId() == null ||appointmentDao.findById(a.getId()) == null) {
+			throw new IllegalArgumentException("Id não encontrado");
+
+		}
+
+		return appointmentDao.findById(a.getId());
+	}
+
+	public List<Appointment> findAll() {
+		return appointmentDao.findAll();
 	}
 
 	private static boolean validaAgendamento(Timestamp timestamp) {
