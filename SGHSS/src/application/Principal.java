@@ -19,23 +19,29 @@ public class Principal {
 		PatientService patientService = new PatientService(patientDao);
 
 		// program e testar as validações***
+		char decisão = 's';
 
 		System.out.println("\n=== TESTE 1 : Criação do Paciente ===");
+		while (decisão != 'n') {
+			System.out.println("\n=== Qual é o nome do paciente ? ===");
+			String nome = sc.nextLine();
+			System.out.println("\n=== Qual é o email do paciente ? ===");
+			String email = sc.nextLine();
+			System.out.println("\n=== Qual é o telefone do paciente ? ===");
+			String telefone = sc.nextLine();
+			System.out.print("Data de nascimento (dd-MM-yyyy): ");
+			String dataNascimento = sc.nextLine();
+			LocalDate dateNascimento = LocalDate.parse(dataNascimento, formatter);
+			Patient patient = new Patient(nome, email, telefone, dateNascimento);
+			patientService.createPatient(patient);
+			System.out.println("Paciente cadastrado com sucesso!");
 
-		System.out.println("\n=== Qual é o nome do paciente ? ===");
-		String nome = sc.nextLine();
-		System.out.println("\n=== Qual é o email do paciente ? ===");
-		String email = sc.nextLine();
-		System.out.println("\n=== Qual é o telefone do paciente ? ===");
-		String telefone = sc.nextLine();
-		System.out.print("Data de nascimento (dd-MM-yyyy): ");
-		String dataNascimento = sc.nextLine();
-		LocalDate dateNascimento = LocalDate.parse(dataNascimento, formatter);
-		Patient patient = new Patient(nome, email, telefone, dateNascimento);
-		patientService.createPatient(patient);
-		System.out.println("Paciente cadastrado com sucesso!");
+			System.out.println("Gostaria de cadastrar mais um paciente ? [s/n]");
+			decisão = sc.next().toLowerCase().charAt(0);
+			sc.nextLine(); 
 
-		sc.close();	
+		}
+		sc.close();
 
 	}
 

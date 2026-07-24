@@ -25,7 +25,7 @@ public class DB {
 
 		} catch (SQLException e) {
 
-			throw new DbException(e.getMessage());
+			throw new DbException("Oi 1"+e.getMessage());
 		}
 		return conn;
 	}
@@ -37,7 +37,7 @@ public class DB {
 				conn.close();
 			} catch (SQLException e) {
 
-				throw new DbException(e.getMessage());
+				throw new DbException("Oi 2"+e.getMessage());
 
 			}
 		}
@@ -50,7 +50,7 @@ public class DB {
 
 			} catch (SQLException e) {
 
-				throw new DbException(e.getMessage());
+				throw new DbException("Oi 3"+e.getMessage());
 			}
 
 		}
@@ -62,7 +62,7 @@ public class DB {
 				rs.close();
 			} catch (SQLException e) {
 
-				throw new DbException(e.getMessage());
+				throw new DbException("Oi 4"+e.getMessage());
 			}
 
 		}
@@ -76,7 +76,7 @@ public class DB {
 
 		} catch (IOException e) {
 
-			throw new DbException(e.getMessage());
+			throw new DbException("Oi 7"+e.getMessage());
 		}
 	}
 
